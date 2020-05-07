@@ -6,9 +6,19 @@ services:
     container_name: yapi-web
     ports:
       - 40001:3000
-    volumes:
-      - ./config.js:/yapi/config.js
+    environment:
+      - YAPI_ADMIN_ACCOUNT=admin@docker.yapi
+      - YAPI_ADMIN_PASSWORD=adm1n
+      - YAPI_CLOSE_REGISTER=true
+      - YAPI_DB_SERVERNAME=yapi-mongo
+      - YAPI_DB_PORT=27017
+      - YAPI_DB_DATABASE=yapi
+      - YAPI_MAIL_ENABLE=false
+      - YAPI_LDAP_LOGIN_ENABLE=false
+      - YAPI_PLUGINS=[]
     depends_on:
+      - yapi-mongo
+    links:
       - yapi-mongo
     restart: unless-stopped
   yapi-mongo:
